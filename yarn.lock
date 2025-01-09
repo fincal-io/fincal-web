@@ -190,18 +190,6 @@
   dependencies:
     levn "^0.4.1"
 
-"@hugeicons/core@^1.2.0", "@hugeicons/core@latest":
-  version "1.2.0"
-  resolved "https://npm.hugeicons.com/@hugeicons/core/-/core-1.2.0.tgz#221ab2eafe1f4f19ebe9ddb10c06b71b0fe29c8c"
-  integrity sha512-2O7U0uPht4xaBDAVPUSSCLjDP+rUgLPEoW7vdl2VczaeNrOBf49oHhkKLCHKT1/jaVWyf1L+y9Z+KzOSWVXAfw==
-
-"@hugeicons/svelte@^0.3.0":
-  version "0.3.0"
-  resolved "https://npm.hugeicons.com/@hugeicons/svelte/-/svelte-0.3.0.tgz#cedd8eb386fa6f969d2f1578fde0afb7f067f2cc"
-  integrity sha512-8OG93IlhJhbxD4dlQUZLL3vxUb+9mr7oEl3rA5b+6GJ3+eBdwMFQJPf1FQD8q23+7J3IbSH0RpD/oTlxtQsrWQ==
-  dependencies:
-    "@hugeicons/core" latest
-
 "@humanfs/core@^0.19.1":
   version "0.19.1"
   resolved "https://registry.yarnpkg.com/@humanfs/core/-/core-0.19.1.tgz#17c55ca7d426733fe3c561906b8173c336b40a77"
