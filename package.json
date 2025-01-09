@@ -30,8 +30,6 @@
 		"vite": "^5.4.11"
 	},
 	"dependencies": {
-		"@hugeicons/core": "^1.2.0",
-		"@hugeicons/svelte": "^0.3.0",
 		"sass": "^1.83.1"
 	}
 }
