@@ -1,0 +1,27 @@
+<script lang="ts">
+	let { size = 22, color = 'var(--md-on-surface)' }: { size?: number; color?: string } = $props();
+</script>
+
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	viewBox="0 0 24 24"
+	width={size}
+	height={size}
+	{color}
+	fill="none"
+>
+	<path
+		d="M4 9L20 9"
+		stroke="currentColor"
+		stroke-width="1.5"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+	/>
+	<path
+		d="M4 15L14 15"
+		stroke="currentColor"
+		stroke-width="1.5"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+	/>
+</svg>
