@@ -1,10 +1,28 @@
 <script lang="ts">
-	let { children, block, size, ...rest }: { children?: any; block?: boolean; size?: 'md' | 'lg' } =
-		$props();
+	import { initGoogleLogin } from '../../states/auth.state.svelte';
+	import Spinner from '../spinner.svelte';
+
+	let {
+		children,
+		block,
+		size,
+		loading,
+		...rest
+	}: {
+		children?: any;
+		block?: boolean;
+		size?: 'md' | 'lg';
+		loading?: boolean;
+		[key: string]: any;
+	} = $props();
 </script>
 
 <button {...rest} class:block class={size}>
-	{@render children?.()}
+	{#if loading}
+		<Spinner size="sm" />
+	{:else}
+		{@render children?.()}
+	{/if}
 </button>
 
 <style lang="scss">
@@ -20,6 +38,9 @@
 		cursor: pointer;
 		transition: background-color 0.2s ease-in-out;
 
+		display: grid;
+		place-items: center;
+
 		&.block {
 			width: 100%;
 		}
@@ -29,7 +50,7 @@
 		}
 
 		&.lg {
-			padding: 12rpx 16px;
+			padding: 12px 16px;
 		}
 	}
 </style>

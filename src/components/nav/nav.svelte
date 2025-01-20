@@ -23,7 +23,11 @@
 	import { navState$ } from './nav.state.svelte';
 
 	import { page } from '$app/state';
-	import { replaceState } from '$app/navigation';
+	import { replaceState, onNavigate } from '$app/navigation';
+
+	onNavigate(() => {
+		navState$.open = false;
+	});
 
 	const basePath$ = $derived(page.url.pathname.split('/').at(1));
 </script>
@@ -240,10 +244,10 @@
 			<DocumentationIcon color="var(--md-on-surface-variant)" />
 			<p class="name">Documentation</p>
 		</a>
-		<div class="nav-item">
+		<a class="nav-item" href="/switch">
 			<SwitchWorkspaceIcon color="var(--md-on-surface-variant)" />
-			<p class="name">Switch Workspace</p>
-		</div>
+			<span class="name">Switch Workspace</span>
+		</a>
 	</div>
 </div>
 
@@ -342,7 +346,7 @@
 	.nav-item {
 		display: flex;
 		align-items: center;
-		padding: 10px 16px;
+		padding: 8px 16px;
 		cursor: pointer;
 		gap: 12px;
 		border-radius: 6px;
@@ -352,10 +356,11 @@
 			background-color: var(--md-surface-container-low);
 		}
 
+		span,
 		p {
-			font-size: 14px;
-			letter-spacing: 0.01em;
+			font-size: 13px;
 			color: var(--md-on-surface-variant);
+			font-weight: 400;
 		}
 
 		&.active {

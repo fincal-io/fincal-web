@@ -1,8 +1,8 @@
 <script lang="ts">
-	let { children }: { children?: any } = $props();
+	let { children, onclick }: { children?: any; onclick?: () => void } = $props();
 </script>
 
-<tr>
+<tr {onclick}>
 	{@render children?.()}
 </tr>
 

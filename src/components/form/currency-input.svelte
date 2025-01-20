@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { workspaceState$ } from '../../states/workspace.state.svelte';
 	import CurrencyDialPad from '../currency-dial-pad.svelte';
 
 	let {
@@ -10,19 +11,31 @@
 	}: {
 		currencyId?: string;
 		placeholder?: string;
-		update?: (currencyId: string, value: number) => void;
+		update?: (value: number) => void;
 		value?: number;
 	} = $props();
 
 	let open$ = $state(false);
+
+	let total = $derived.by(() => {
+		const c = workspaceState$.currencies?.find((c) => c.code === currencyId);
+
+		if (!c) {
+			return '--';
+		}
+
+		const formatter = Intl.NumberFormat(c.locale, { style: 'currency', currency: c.code });
+
+		return formatter.format(value || 0);
+	});
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <div class="input-wrapper" role="button" tabindex="0" onclick={() => (open$ = true)}>
 	{#if value === undefined || value === null}
-		<p class:focused={open$} class="placeholder">{placeholder || '$ 0.00'}</p>
+		<p class:focused={open$} class="placeholder">{total}</p>
 	{:else}
-		<p class:focused={open$}>$ {value}</p>
+		<p class:focused={open$}>{total}</p>
 	{/if}
 </div>
 
@@ -37,7 +50,14 @@
 ></a>
 
 <div class="currency-editor-container" class:open={open$}>
-	<CurrencyDialPad />
+	<CurrencyDialPad
+		{currencyId}
+		{value}
+		update={(v) => {
+			open$ = false;
+			update?.(v);
+		}}
+	/>
 </div>
 
 <style lang="scss">

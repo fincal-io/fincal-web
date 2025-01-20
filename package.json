@@ -10,19 +10,23 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
-		"lint": "prettier --check . && eslint ."
+		"lint": "prettier --check . && eslint .",
+		"api:gen:local": "openapi-typescript http://localhost:8080/reference/openapi.json -o ./src/api/fincal.d.ts"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.3",
 		"@sveltejs/adapter-static": "^3.0.8",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
+		"@types/google.accounts": "^0.0.15",
 		"eslint": "^9.7.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.36.0",
 		"globals": "^15.0.0",
+		"openapi-typescript": "^7.5.2",
 		"prettier": "^3.3.2",
 		"prettier-plugin-svelte": "^3.2.6",
+		"sass": "^1.83.1",
 		"svelte": "^5.0.0",
 		"svelte-check": "^4.0.0",
 		"typescript": "^5.0.0",
@@ -30,6 +34,7 @@
 		"vite": "^5.4.11"
 	},
 	"dependencies": {
-		"sass": "^1.83.1"
+		"@vitejs/plugin-basic-ssl": "^1.2.0",
+		"openapi-fetch": "^0.13.4"
 	}
 }

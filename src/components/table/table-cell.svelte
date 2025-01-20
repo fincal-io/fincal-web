@@ -23,6 +23,7 @@
 		}
 
 		&.max {
+			max-width: 0;
 			width: 100%;
 		}
 	}

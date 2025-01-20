@@ -1,8 +1,8 @@
 <script lang="ts">
-	let { children, flipV, faded, size = 'md', ...rest }: any = $props();
+	let { children, flipV, faded, size = 'md', disabled = false, ...rest }: any = $props();
 </script>
 
-<button {...rest} class:flipV class:faded class={size}>
+<button {...rest} class:flipV class:faded class={size} class:disabled>
 	{@render children?.()}
 </button>
 
@@ -21,8 +21,8 @@
 		cursor: pointer;
 
 		&.lg {
-			width: 52px;
-			height: 52px;
+			width: 44px;
+			height: 44px;
 		}
 
 		&:hover {
@@ -39,6 +39,12 @@
 			&:hover {
 				opacity: 0.9;
 			}
+		}
+
+		&.disabled {
+			opacity: 0.4;
+			pointer-events: none;
+			touch-action: none;
 		}
 	}
 </style>

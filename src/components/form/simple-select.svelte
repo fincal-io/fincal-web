@@ -116,6 +116,8 @@
 		top: calc(100% + 6px);
 		left: -1px;
 		right: -1px;
+		max-height: 400px;
+		overflow: hidden scroll;
 
 		background-color: var(--md-surface-container-high);
 		border-radius: 4px;

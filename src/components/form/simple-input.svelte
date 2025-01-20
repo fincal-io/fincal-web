@@ -4,12 +4,19 @@
 		placeholder,
 		type = 'text',
 		value = $bindable(''),
+		faded = false,
 		...rest
-	}: { children?: any; placeholder?: string; type?: string; value?: string } = $props();
+	}: {
+		children?: any;
+		placeholder?: string;
+		type?: string;
+		value?: string;
+		faded?: boolean;
+	} = $props();
 </script>
 
-<div class="input-wrapper">
-	<input {...rest} {type} {placeholder} />
+<div class="input-wrapper" class:faded>
+	<input {...rest} {type} {placeholder} bind:value />
 </div>
 
 <style lang="scss">
@@ -19,6 +26,10 @@
 		align-items: center;
 		background-color: var(--md-surface-container-high);
 		border-radius: 4px;
+
+		&.faded {
+			background-color: var(--md-surface-container-highest);
+		}
 	}
 
 	input {

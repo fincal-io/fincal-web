@@ -1,8 +1,21 @@
 <script lang="ts">
-	let { children, block, ...rest }: { children?: any; block?: boolean } = $props();
+	let {
+		children,
+		block,
+		faded,
+		disabled = false,
+		onclick,
+		...rest
+	}: {
+		children?: any;
+		block?: boolean;
+		disabled?: boolean;
+		faded?: boolean;
+		onclick?: () => void;
+	} = $props();
 </script>
 
-<button {...rest} class:block>
+<button {...rest} class:block class:faded {onclick} {disabled}>
 	{@render children?.()}
 </button>
 
@@ -22,10 +35,25 @@
 
 		&.block {
 			width: 100%;
+			height: 100%;
 		}
 
 		&:hover {
 			background-color: var(--md-surface-container-low);
+		}
+
+		&.faded {
+			background-color: var(--md-tertiary-container);
+			color: var(--md-on-tertiary-container);
+
+			&:hover {
+				opacity: 0.9;
+			}
+		}
+
+		&[disabled] {
+			opacity: 0.4;
+			cursor: not-allowed;
 		}
 	}
 </style>

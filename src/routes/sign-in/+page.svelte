@@ -1,7 +1,13 @@
 <script lang="ts">
 	import { assets } from '$app/paths';
+	import { onMount } from 'svelte';
 	import FilledButton from '../../components/button/filledButton.svelte';
 	import TextButton from '../../components/button/textButton.svelte';
+	import { authState$, initGoogleLogin } from '../../states/auth.state.svelte';
+
+	onMount(() => {
+		initGoogleLogin();
+	});
 </script>
 
 <div class="card-wrapper">
@@ -13,7 +19,7 @@
 		<p class="hint">Personal Wealth Management and Planner</p>
 
 		<div class="content">
-			<FilledButton block>Continue with Google</FilledButton>
+			<div id="google-sign-in-wrapper"></div>
 		</div>
 
 		<div class="actions">
@@ -77,6 +83,11 @@
 		.content {
 			width: 100%;
 			padding: 48px 0;
+
+			:global(#google-sign-in-wrapper div) {
+				display: grid;
+				place-items: center;
+			}
 		}
 
 		.actions {
