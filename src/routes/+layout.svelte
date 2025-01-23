@@ -14,8 +14,6 @@
 <svelte:head>
 	<title>Fincal</title>
 	<description>Personal Wealth Management and Planner</description>
-	<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-	<link rel="manifest" href="%sveltekit.assets%/manifest.json" />
 </svelte:head>
 
 {#if authState$.settled}
