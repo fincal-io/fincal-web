@@ -16,11 +16,10 @@
 
 	label {
 		p {
-			font-size: 12px;
+			font-size: 13px;
 			letter-spacing: 0.02em;
-			color: var(--md-on-surface-variant);
+			color: var(--color-text-low);
 			margin-bottom: 10px;
-			opacity: 0.8;
 			font-weight: 400;
 		}
 	}

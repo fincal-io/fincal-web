@@ -14,6 +14,10 @@
 	import type { components } from '../../../../../api/fincal';
 	import { authState$ } from '../../../../../states/auth.state.svelte';
 	import { workspaceState$ } from '../../../../../states/workspace.state.svelte';
+	import Header from '../../../../../components/header.svelte';
+	import MultiplyIcon from '../../../../../icons/multiplyIcon.svelte';
+	import PricerBlock from '../../../../../components/pricer-block.svelte';
+	import AccountPicker from '../../../../../components/form/account-picker.svelte';
 
 	const close = () => {
 		goto('/accounts');
@@ -77,68 +81,42 @@
 	};
 </script>
 
-<div class="wrapper">
-	<div class="header">
-		<h1>New Account</h1>
-		<IconButton onclick={close}>
-			<CloseIcon color="var(--md-outline-variant)"></CloseIcon>
-		</IconButton>
-	</div>
+<Header title="New Account" showNav={false}>
+	<IconButton onclick={close}>
+		<MultiplyIcon color="var(--color-text-lower)"></MultiplyIcon>
+	</IconButton>
+</Header>
 
+<PricerBlock
+	title="Initial Balance"
+	value={account$.amount}
+	currencyId={account$.currencyId}
+	editable
+/>
+
+<div class="wrapper">
 	<div class="content">
-		<FormGroup label="Account Holder">
-			<SimpleSelect
-				placeholder="Select the account holder"
-				options={accountHolders$}
-				value={account$.userId}
-				change={(value) => {
-					account$.userId = value;
-				}}
-			/>
-		</FormGroup>
-		<FormGroup label="Account Type">
-			<SimpleSelect
-				placeholder="Select the type of account"
-				options={accountTypes}
-				value={account$.accountType}
-				change={(value) => {
-					account$.accountType = value;
-				}}
-			/>
-		</FormGroup>
 		<FormGroup label="Name">
 			<SimpleInput placeholder="Pick a friendly name" bind:value={account$.name} />
 		</FormGroup>
-		<FormGroup label="Currency">
-			<SimpleSelect
-				placeholder="Select the currency"
-				options={availableCurrencies$}
-				value={account$.currencyId}
-				change={(value) => {
-					account$.currencyId = value;
-				}}
-			/>
-		</FormGroup>
-		<FormGroup label="Opening Balance">
-			<CurrencyInput
-				value={account$.amount}
-				currencyId={account$.currencyId}
-				update={(v) => {
-					account$.amount = v;
-				}}
-			/>
-		</FormGroup>
+
 		<FormGroup label="Account Number (Optional)">
 			<SimpleInput placeholder="Enter the account number" bind:value={account$.accountNumber} />
 			<p class="hint">Used for intelligent imports <a href={null}>Learn More</a></p>
 		</FormGroup>
 	</div>
+</div>
 
-	<div class="actions">
-		<FilledButton onclick={() => save()} block loading={loading$} size="lg"
-			>Create Account</FilledButton
-		>
-	</div>
+<div class="footer">
+	<AccountPicker
+		placeholder="Select the account holder"
+		options={accountHolders$}
+		value={account$.userId}
+		change={(value) => {
+			account$.userId = value;
+		}}
+	></AccountPicker>
+	<FilledButton onclick={() => save()} block loading={loading$} size="lg">Save</FilledButton>
 </div>
 
 <style lang="scss">
@@ -147,7 +125,6 @@
 		grid-template-rows: auto 1fr auto;
 		gap: 12px;
 		padding: 12px 22px;
-		height: 100dvh;
 
 		.header {
 			display: flex;
@@ -155,10 +132,11 @@
 			justify-content: space-between;
 			gap: 12px;
 			margin-right: -4px;
+			padding: 8px 0;
 
 			h1 {
-				font-size: 16px;
-				font-weight: 500;
+				font-size: 18px;
+				font-weight: 600;
 				margin: 0;
 			}
 		}
@@ -177,18 +155,31 @@
 	}
 
 	.hint {
-		margin-top: 8px;
-		font-size: 11px;
+		margin-top: 12px;
+		font-size: 12px;
 		letter-spacing: 0.01em;
 		text-align: right;
-		color: var(--md-on-surface-variant);
+		color: var(--color-text-lower);
 		opacity: 0.9;
 
 		a {
-			color: var(--md-tertiary);
+			color: var(--color-text-lower);
 			text-decoration: underline;
 			text-underline-offset: 2px;
 			cursor: pointer;
 		}
+	}
+
+	.footer {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		padding: 16px 24px;
+		border-top: 1px solid var(--color-border-variant);
+
+		display: grid;
+		grid-template-columns: 2fr 1fr;
+		gap: 24px;
 	}
 </style>

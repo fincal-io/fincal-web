@@ -26,7 +26,7 @@
 		}
 
 		&:hover {
-			background-color: var(--md-surface-container-low);
+			background-color: var(--color-surface-high);
 		}
 
 		&.flipV {
@@ -34,7 +34,7 @@
 		}
 
 		&.faded {
-			background-color: var(--md-secondary-container);
+			background-color: var(--color-surface-highest);
 
 			&:hover {
 				opacity: 0.9;

@@ -24,8 +24,10 @@
 		width: 100%;
 		display: flex;
 		align-items: center;
-		background-color: var(--md-surface-container-high);
-		border-radius: 4px;
+		background-color: transparent;
+		border-radius: 6px;
+		border: 1px solid var(--color-border-variant);
+		background-color: var(--color-surface-low);
 
 		&.faded {
 			background-color: var(--md-surface-container-highest);
@@ -34,9 +36,9 @@
 
 	input {
 		width: 100%;
-		padding: 12px 12px;
+		padding: 12px;
 		border: 1px solid transparent;
-		font-size: 13px;
+		font-size: 16px;
 		letter-spacing: 0.01em;
 		background-color: transparent;
 		border: 1px solid transparent;
@@ -48,7 +50,7 @@
 		}
 
 		&::placeholder {
-			color: var(--md-on-surface-variant);
+			color: var(--color-text-low);
 			opacity: 0.4;
 		}
 	}

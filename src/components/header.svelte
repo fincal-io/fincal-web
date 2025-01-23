@@ -4,17 +4,33 @@
 	import IconButton from './button/iconButton.svelte';
 	import { navState$ } from './nav/nav.state.svelte';
 
-	let { breadcrumbs = [], children }: { breadcrumbs: BreadcrumbItem[]; children?: any } = $props();
+	let {
+		breadcrumbs = [],
+		children,
+		title = '',
+		showNav = true
+	}: {
+		breadcrumbs?: BreadcrumbItem[];
+		children?: any;
+		title?: string;
+		showNav?: boolean;
+	} = $props();
 </script>
 
 <header>
-	<IconButton onclick={() => (navState$.open = true)}>
-		<NavIcon></NavIcon>
-	</IconButton>
+	{#if showNav}
+		<IconButton onclick={() => (navState$.open = true)}>
+			<NavIcon></NavIcon>
+		</IconButton>
+	{:else}
+		<div class="spacer"></div>
+	{/if}
 
-	<div class="breadcrumb">
+	<h1>{title}</h1>
+
+	<!-- <div class="breadcrumb">
 		<Breadcrumb items={breadcrumbs} />
-	</div>
+	</div> -->
 
 	<div class="actions">
 		{@render children?.()}
@@ -29,7 +45,11 @@
 		padding: 12px;
 
 		gap: 12px;
-		background-color: var(--md-surface-container-low);
+		background-color: var(--color-surface-low);
+
+		.spacer {
+			width: 24px;
+		}
 	}
 
 	.breadcrumb {
@@ -39,5 +59,11 @@
 
 	.actions {
 		flex: 0 0 auto;
+	}
+
+	h1 {
+		font-size: 16px;
+		font-weight: 500;
+		letter-spacing: 0.02em;
 	}
 </style>

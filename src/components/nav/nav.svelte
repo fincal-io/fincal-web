@@ -273,7 +273,7 @@
 	}
 
 	.nav {
-		background-color: var(--md-surface-container);
+		background-color: var(--color-container);
 		position: fixed;
 		top: 0;
 		bottom: 0;
@@ -309,12 +309,13 @@
 
 		p {
 			font-size: 18px;
+			font-weight: 600;
 
 			&.version {
 				flex: 1 1 auto;
 				text-align: right;
 				font-size: 12px;
-				color: var(--md-on-surface-variant);
+				color: var(--color-text-lower);
 			}
 		}
 	}
@@ -336,41 +337,42 @@
 		.group-title {
 			padding: 0 12px;
 			font-size: 11px;
-			color: var(--md-on-surface-variant);
+			color: var(--color-text-lower);
 			text-transform: uppercase;
 			letter-spacing: 0.06em;
 			margin-bottom: 8px;
+			font-weight: 500;
 		}
 	}
 
 	.nav-item {
 		display: flex;
 		align-items: center;
-		padding: 8px 16px;
+		padding: 12px 16px;
 		cursor: pointer;
 		gap: 12px;
 		border-radius: 6px;
 		transition: background-color 0.2s ease-in-out;
 
 		&:hover {
-			background-color: var(--md-surface-container-low);
+			background-color: var(--color-container-highest);
 		}
 
 		span,
 		p {
-			font-size: 13px;
-			color: var(--md-on-surface-variant);
-			font-weight: 400;
+			font-size: 14px;
+			color: var(--color-low);
+			font-weight: 500;
 		}
 
 		&.active {
-			background-color: var(--md-surface-container-high);
+			background-color: var(--color-container-high);
 		}
 	}
 
 	.divider {
 		height: 1px;
-		background-color: var(--md-outline-variant);
+		background-color: var(--color-border-variant);
 		margin: 4px 0;
 	}
 </style>

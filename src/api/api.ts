@@ -2,7 +2,7 @@ import createClient from 'openapi-fetch';
 import type { paths } from './fincal.js';
 
 const client = createClient<paths>({
-	baseUrl: 'http://localhost:8080/',
+	baseUrl: import.meta.env.PROD ? 'https://api.fincal.io/' : 'https://api.fincal.io/',
 	fetch: async (req) => {
 		const accessToken =
 			sessionStorage.getItem('accessToken') || localStorage.getItem('accessToken');

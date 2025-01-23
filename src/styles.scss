@@ -1,31 +1,31 @@
 :root {
 	--md-primary: #d0bcff;
 	--md-on-primary: #371e73;
-	--md-primary-container: #4f378b;
-	--md-on-primary-container: #eaddff;
+	--md-primary-container: #f7f7f7;
+	--md-on-primary-container: #0e1214;
 
 	--md-secondary: #ccc2dc;
 	--md-on-secondary: #332d41;
 	--md-secondary-container: #4a4458;
 	--md-on-secondary-container: #e8def8;
 
-	--md-tertiary: #efb8c8;
+	--md-tertiary: #6c757d;
 	--md-on-tertiary: #492532;
 	--md-tertiary-container: #633b48;
 	--md-on-tertiary-container: #ffd8e4;
 
 	// /* Surface colors */
-	--md-surface: #141218;
+	--md-surface: #0e1214;
 	--md-on-surface: #e6e0e9;
 	--md-surface-variant: #49454f;
 	--md-on-surface-variant: #cac4d0;
 
 	// /* Surface container variants */
 	// --md-surface-container-lowest: #0F0D13;
-	--md-surface-container-low: #1d1b20;
-	--md-surface-container: #211f26;
-	--md-surface-container-high: #2b2930;
-	--md-surface-container-highest: #36343b;
+	--md-surface-container-low: #1f282c;
+	--md-surface-container: #151b1e;
+	--md-surface-container-high: #2b383e;
+	--md-surface-container-highest: #38474f;
 
 	// /* Additional colors */
 	// --md-background: #141218;
@@ -43,20 +43,49 @@
 	// --md-shadow: #000000;
 }
 
-body {
-	background-color: var(--md-surface);
+:root {
+	--color-surface: #0f0f0f;
+	--color-surface-low: #18181b;
+	--color-surface-lower: #26272b;
+
+	--color-surface-high: #292929;
+	--color-surface-highest: #141414;
+
+	--color-container: #131316;
+	--color-container-high: #26272b;
+	--color-container-highest: #3f3f46;
+
+	--color-text: #f5f5f5;
+	--color-text-low: #d6d6d6;
+	--color-text-lower: #a3a3a3;
+	--color-text-lowest: #a9a29d;
+
+	--color-border: #1c1917;
+	--color-border-variant: #292524;
+
+	--color-border-form: #44403c;
+
+	--color-primary: #e7c3d8;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100..900&display=swap');
+body {
+	background-color: var(--color-surface);
+}
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Raleway:wght@100..900&display=swap');
 @import './tabler-icons-outline.css';
 
 * {
 	margin: 0;
 	padding: 0;
-	color: var(--md-on-surface);
-	font-family: 'Noto Sans', serif;
-	font-optical-sizing: auto;
+	color: var(--color-text);
+	font-family: 'Raleway', serif;
+	font-optical-sizing: none;
 	box-sizing: border-box;
+}
+
+.price-text {
+	font-family: 'Lato', serif;
+	font-style: normal;
 }
 
 :root {

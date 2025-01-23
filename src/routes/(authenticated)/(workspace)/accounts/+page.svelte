@@ -11,17 +11,7 @@
 	import AddIcon from '../../../../icons/addIcon.svelte';
 	import { api } from '../../../../api/api';
 	import { workspaceState$ } from '../../../../states/workspace.state.svelte';
-
-	const breadcrumbs: BreadcrumbItem[] = [
-		{
-			name: 'Home',
-			href: '/'
-		},
-		{
-			name: 'Accounts',
-			href: '/accounts'
-		}
-	];
+	import { currencyFormatter } from '../../../../actions/currency.formatter.svelte';
 
 	const edit = (id = 'new') => {
 		goto(`/accounts/new`);
@@ -47,42 +37,97 @@
 	});
 </script>
 
-<Header {breadcrumbs}>
+<Header title="Accounts">
 	<IconButton onclick={() => edit()}>
 		<AddIcon />
 	</IconButton>
 </Header>
 
+<div class="info-header">
+	<h2>Total Balance</h2>
+	<p class="value" use:currencyFormatter={100}></p>
+</div>
+
 <div class="content">
-	<Table>
+	<p class="content-title">All Accounts</p>
+	<div class="list">
 		{#each mappedAccounts$ as account}
-			<TableRow onclick={() => goto(`/accounts/${account.id}`)}>
-				<TableCell max>{account.name}</TableCell>
-				<TableCell>
-					<p class="user">{account.user}</p>
-				</TableCell>
-				<TableCell end>
-					<p class="price">{account.balance}</p>
-				</TableCell>
-			</TableRow>
+			<!-- svelte-ignore a11y_click_events_have_key_events -->
+			<div
+				class="list-item"
+				onclick={() => goto(`/accounts/${account.id}`)}
+				role="button"
+				tabindex="0"
+			>
+				<div class="logo"></div>
+				<div class="info">
+					<p class="name">{account.name}</p>
+					<p class="hint">{account.user}</p>
+				</div>
+
+				<div class="amount" use:currencyFormatter={account.balance}></div>
+			</div>
 		{/each}
-	</Table>
+	</div>
 </div>
 
 <style lang="scss">
 	.content {
-		padding: 6px 8px 6px 10px;
-
-		.price {
-			color: var(--md-primary);
+		.content-title {
+			padding: 24px 24px 12px 24px;
+			color: var(--color-text-lower);
 			font-weight: 600;
-			font-size: 12px;
-			letter-spacing: 0.01em;
+			font-size: 14px;
 		}
+	}
 
-		.user {
-			font-size: 12px;
-			color: var(--md-on-surface-variant);
+	.list {
+		.list-item {
+			padding: 16px 24px;
+			display: flex;
+			gap: 18px;
+			align-items: center;
+			border-bottom: 1px solid var(--color-border);
+			border-bottom: 0.5px solid var(--color-border);
+
+			.logo {
+				flex: 0 0 auto;
+				background-color: white;
+				width: 36px;
+				height: 36px;
+				border-radius: 100px;
+			}
+
+			.info {
+				flex: 1 1 auto;
+				overflow: hidden;
+
+				.name {
+					font-size: 15px;
+					font-weight: 600;
+					margin-bottom: 4px;
+					text-wrap: nowrap;
+					width: 100%;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+				}
+
+				.hint {
+					color: var(--color-text-lower);
+					font-size: 12px;
+					font-weight: 400;
+				}
+			}
+
+			.amount {
+				font-size: 17px;
+				font-weight: 400;
+				padding-left: 22px;
+				color: var(--color-primary);
+				flex: 0 0 auto;
+				letter-spacing: 0;
+			}
 		}
 	}
 </style>
