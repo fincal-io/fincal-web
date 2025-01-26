@@ -60,7 +60,7 @@
 				<div class="currency">{currency$?.code?.toLocaleUpperCase()}</div>
 			</IconButton>
 		</div>
-		<div class="input" class:placeholder={!input$}>{input$ || '0.00'}</div>
+		<div class="input price-text" class:placeholder={!input$}>{input$ || '0.00'}</div>
 		<div class="button-wrapper">
 			<IconButton flipV onclick={() => onInput('<')}>
 				<BackspaceIcon color="var(--md-on-surface-variant)" />
@@ -115,7 +115,7 @@
 	</div>
 
 	<div class="button">
-		<FilledButton onclick={() => save()} size="lg" block>Continue</FilledButton>
+		<FilledButton onclick={() => save()} size="lg" block>Save</FilledButton>
 	</div>
 </div>
 
@@ -126,14 +126,15 @@
 		padding: 24px;
 
 		.title {
-			font-size: 13px;
-			color: var(--md-on-surface-variant);
+			font-size: 14px;
+			color: var(--color-text-lower);
 			margin-bottom: 18px;
+			font-weight: 500;
 		}
 	}
 
 	.input-wrapper {
-		border-bottom: 1px solid var(--md-outline);
+		border-bottom: 1px solid var(--color-border-form);
 		display: flex;
 		align-items: center;
 		padding: 4px 0;
@@ -149,13 +150,13 @@
 
 		.currency {
 			font-size: 13px;
-			color: var(--md-on-surface-variant);
+			color: var(--color-text-low);
 		}
 
 		.input {
 			flex: 1 1 auto;
 			font-size: 42px;
-			color: var(--md-tertiary);
+			color: var(--color-text);
 			font-weight: 500;
 			letter-spacing: 0.02em;
 			text-wrap: nowrap;
@@ -164,14 +165,14 @@
 			justify-content: flex-end;
 
 			&.placeholder {
-				color: var(--md-secondary-container);
+				color: var(--color-text-lowest);
 			}
 		}
 	}
 
 	.help {
-		font-size: 14px;
-		color: var(--md-on-surface-variant);
+		font-size: 13px;
+		color: var(--color-text-lower);
 		margin: 12px 0 0 0;
 	}
 

@@ -5,7 +5,7 @@ export const currencyFormatter: Action<
 	HTMLElement,
 	string | number | { amount: number; currency: string } | undefined
 > = (node, option) => {
-	$effect(() => {
+	const apply = (option: string | number | { amount: number; currency: string } | undefined) => {
 		const currencyId =
 			typeof option === 'object' && option.currency
 				? option.currency
@@ -34,5 +34,15 @@ export const currencyFormatter: Action<
 			.format(amount)
 			.replace(/([^\d.,\s])(\d)/, '$1 $2')
 			.replace(/(\d)([^\d.,\s])$/, '$1 $2');
+	};
+
+	$effect(() => {
+		apply(option);
 	});
+
+	return {
+		update: (option) => {
+			apply(option);
+		}
+	};
 };

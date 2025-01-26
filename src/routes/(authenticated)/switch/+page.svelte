@@ -45,7 +45,7 @@
 		>
 			<div class="info">
 				<p class="name">{workspace.name}</p>
-				<p class="info">Reez P. + 6 others</p>
+				<p class="hint">Reez P. + 6 others</p>
 			</div>
 
 			<div class="switch">
@@ -65,7 +65,7 @@
 		}
 
 		.workspace-list {
-			padding: 16px 24px;
+			padding: 16px;
 			display: flex;
 			align-items: center;
 			gap: 12px;
@@ -73,17 +73,22 @@
 
 			.info {
 				flex: 1 1 auto;
-
 				display: flex;
 				flex-direction: column;
-				gap: 6px;
+				gap: 4px;
+				overflow: hidden;
 
 				.name {
-					font-size: 16px;
-					font-weight: 500;
+					font-size: 14px;
+					font-weight: 600;
+					text-wrap: nowrap;
+					width: 100%;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
 				}
 
-				.info {
+				.hint {
 					color: var(--color-text-lower);
 					font-size: 12px;
 					font-weight: 500;

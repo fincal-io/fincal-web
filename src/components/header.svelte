@@ -59,6 +59,10 @@
 
 	.actions {
 		flex: 0 0 auto;
+
+		display: flex;
+		align-items: center;
+		gap: 4px;
 	}
 
 	h1 {

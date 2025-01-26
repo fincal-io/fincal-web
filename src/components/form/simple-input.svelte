@@ -3,7 +3,8 @@
 		children,
 		placeholder,
 		type = 'text',
-		value = $bindable(''),
+		value = '',
+		setValue = () => {},
 		faded = false,
 		...rest
 	}: {
@@ -11,12 +12,19 @@
 		placeholder?: string;
 		type?: string;
 		value?: string;
+		setValue?: (value: string) => void;
 		faded?: boolean;
 	} = $props();
 </script>
 
 <div class="input-wrapper" class:faded>
-	<input {...rest} {type} {placeholder} bind:value />
+	<input
+		{...rest}
+		{type}
+		{placeholder}
+		{value}
+		oninput={(e) => setValue(e.currentTarget?.value ?? '')}
+	/>
 </div>
 
 <style lang="scss">
@@ -46,7 +54,7 @@
 
 		&:focus {
 			outline: none;
-			border: 1px solid var(--md-primary);
+			border: 1px solid var(--color-primary);
 		}
 
 		&::placeholder {

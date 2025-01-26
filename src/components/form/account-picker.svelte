@@ -6,9 +6,12 @@
 </script>
 
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	import SelectArrowDownIcon from '../../icons/selectArrowDownIcon.svelte';
 
 	import { outsideClick } from '../../utils/outside-click';
+	import { api } from '../../api/api';
 
 	let {
 		children,
@@ -25,9 +28,27 @@
 		change?: (value: string) => void;
 	} = $props();
 
-	const label = $derived(options.find((option) => option.value === value)?.label ?? '');
-
 	let open$ = $state(false);
+
+	let allUsers$ = $state([] as SelectItem[]);
+
+	onMount(async () => {
+		if (options.length) {
+			return;
+		}
+
+		const { data } = await api.GET('/api/v1/users/');
+
+		if (data) {
+			allUsers$ = data.map((user) => ({
+				label: user.name || '',
+				value: user.id || ''
+			}));
+		}
+	});
+
+	let users$ = $derived(options.length ? options : allUsers$);
+	const label = $derived(users$.find((option) => option.value === value)?.label ?? '');
 </script>
 
 <div
@@ -45,7 +66,7 @@
 	</button>
 
 	<div class="options" class:open={open$}>
-		{#each options as option}
+		{#each users$ as option}
 			<button
 				class="option"
 				onclick={(e) => {
@@ -79,7 +100,7 @@
 
 	.select {
 		width: 100%;
-		padding: 11px 12px;
+		padding: 12px;
 		border: 1px solid transparent;
 		background-color: transparent;
 		outline: none;
@@ -118,9 +139,9 @@
 		left: -1px;
 		right: -1px;
 		max-height: 400px;
-		overflow: hidden scroll;
+		overflow: hidden auto;
 
-		background-color: var(--color-surface-lower);
+		background-color: var(--color-container-high);
 		border-radius: 4px;
 		border: none;
 		flex-direction: column;
@@ -140,14 +161,14 @@
 			background: transparent;
 			outline: none;
 			border: none;
-			border-bottom: 1px solid var(--md-outline-variant);
+			border-bottom: 1px solid var(--color-border-variant);
 
 			&:last-child {
 				border-bottom: none;
 			}
 
 			&:hover {
-				background-color: var(--md-surface-container-highest);
+				background-color: var(--color-container-highest);
 			}
 
 			&:first-child {

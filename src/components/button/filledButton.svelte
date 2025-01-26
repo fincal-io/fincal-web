@@ -11,7 +11,7 @@
 	}: {
 		children?: any;
 		block?: boolean;
-		size?: 'md' | 'lg';
+		size?: 'md' | 'lg' | 'sm';
 		loading?: boolean;
 		[key: string]: any;
 	} = $props();
@@ -19,7 +19,7 @@
 
 <button {...rest} class:block class={size}>
 	{#if loading}
-		<Spinner size="sm" />
+		<Spinner size="sm" dark />
 	{:else}
 		{@render children?.()}
 	{/if}
@@ -27,12 +27,12 @@
 
 <style lang="scss">
 	button {
-		background-color: var(--md-primary-container);
-		color: var(--md-on-primary-container);
+		background-color: var(--color-text);
+		color: var(--color-surface);
 		border: none;
 		border-radius: 4px;
 		padding: 10px 16px;
-		font-size: 14px;
+		font-size: 16px;
 		font-weight: 600;
 		letter-spacing: 0.01em;
 		cursor: pointer;
@@ -46,11 +46,16 @@
 		}
 
 		&:hover {
-			background-color: var(--md-on-primary);
+			background-color: var(--color-text-low);
 		}
 
 		&.lg {
 			padding: 12px 16px;
+		}
+
+		&.sm {
+			padding: 8px 16px;
+			font-size: 13px;
 		}
 	}
 </style>

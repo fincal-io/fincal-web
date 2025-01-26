@@ -1996,170 +1996,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/holdings/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get holdings
-         * @description Get all holdings
-         */
-        get: {
-            parameters: {
-                query?: {
-                    /** @description The id of the trading account */
-                    tradingAccountId?: string;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Default Response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["holding_entity"][];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/holdings/{tradingAccountId}/{fundId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Create holding
-         * @description Create holding
-         */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description The id of the trading account */
-                    tradingAccountId: string;
-                    /** @description The id of the fund */
-                    fundId: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["holding_insert"];
-                };
-            };
-            responses: {
-                /** @description Default Response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["holding_entity"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/holdings/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /**
-         * Delete holding
-         * @description Delete holding
-         */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description The id of the holding */
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Default Response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            success?: boolean;
-                        };
-                    };
-                };
-            };
-        };
-        options?: never;
-        head?: never;
-        /**
-         * Update holding
-         * @description Update holding
-         */
-        patch: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description The id of the holding */
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["holding_insert"];
-                };
-            };
-            responses: {
-                /** @description Default Response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["holding_entity"];
-                    };
-                };
-            };
-        };
-        trace?: never;
-    };
     "/api/v1/assets/": {
         parameters: {
             query?: never;
@@ -2973,6 +2809,170 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/holdings/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get holdings
+         * @description Get all holdings
+         */
+        get: {
+            parameters: {
+                query?: {
+                    /** @description The id of the trading account */
+                    tradingAccountId?: string;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["holding_entity"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/holdings/{tradingAccountId}/{fundId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create holding
+         * @description Create holding
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description The id of the trading account */
+                    tradingAccountId: string;
+                    /** @description The id of the fund */
+                    fundId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["holding_insert"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["holding_entity"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/holdings/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete holding
+         * @description Delete holding
+         */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description The id of the holding */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            success?: boolean;
+                        };
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        /**
+         * Update holding
+         * @description Update holding
+         */
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description The id of the holding */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["holding_insert"];
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["holding_entity"];
+                    };
+                };
+            };
+        };
+        trace?: never;
+    };
     "/live": {
         parameters: {
             query?: never;
@@ -3564,29 +3564,6 @@ export interface components {
         };
         /** @example {
          *       "id": "7d9d1e1c-a3f7-4e4d-b8e7-f2f3a9f9e9c9",
-         *       "fundId": "7d9d1e1c-a3f7-4e4d-b8e7-f2f3a9f9e9c9",
-         *       "tradingAccountId": "7d9d1e1c-a3f7-4e4d-b8e7-f2f3a9f9e9c9",
-         *       "quantity": 1000
-         *     } */
-        holding_entity: {
-            /** @description The id of the holding */
-            id?: string;
-            /** @description The id of the fund */
-            fundId?: string;
-            /** @description The id of the trading account */
-            tradingAccountId?: string;
-            /** @description The quantity of the holding */
-            quantity?: number;
-        };
-        /** @example {
-         *       "quantity": 1000
-         *     } */
-        holding_insert: {
-            /** @description The quantity of the holding */
-            quantity: number;
-        };
-        /** @example {
-         *       "id": "7d9d1e1c-a3f7-4e4d-b8e7-f2f3a9f9e9c9",
          *       "name": "Asset",
          *       "icon": "mdi-bank",
          *       "currencyId": "5f5d1e1c-a3f7-4e4d-b8e7-f2f3a9f9e9c9",
@@ -3751,6 +3728,57 @@ export interface components {
             userId?: string;
             /** @description ID of the workspace */
             workspaceId?: string;
+        };
+        /** @example {
+         *       "id": "7d9d1e1c-a3f7-4e4d-b8e7-f2f3a9f9e9c9",
+         *       "fundId": "7d9d1e1c-a3f7-4e4d-b8e7-f2f3a9f9e9c9",
+         *       "tradingAccountId": "7d9d1e1c-a3f7-4e4d-b8e7-f2f3a9f9e9c9",
+         *       "quantity": 1000
+         *     } */
+        holding_entity: {
+            /** @description The id of the holding */
+            id?: string;
+            /** @description The id of the fund */
+            fundId?: string;
+            /** @description The id of the trading account */
+            tradingAccountId?: string;
+            /** @description The quantity of the holding */
+            quantity?: number;
+            fund?: {
+                /** @description The unique identifier for the fund */
+                id?: string;
+                /** @description The name of the fund */
+                name?: string;
+                /** @description The symbol of the fund */
+                symbol?: string;
+                /** @description The type of the fund */
+                type?: string;
+                /** @description The unit price of the fund */
+                unitPrice?: number;
+            };
+            tradingAccount?: {
+                /** @description The id of the trading account */
+                id?: string;
+                /** @description The id of the user */
+                userId?: string;
+            };
+            exchange?: {
+                /** @description The id of the exchange */
+                id?: string;
+                /** @description The name of the exchange */
+                name?: string;
+                /** @description The code of the exchange */
+                code?: string;
+                /** @description The currency id of the exchange */
+                currencyId?: string;
+            };
+        };
+        /** @example {
+         *       "quantity": 1000
+         *     } */
+        holding_insert: {
+            /** @description The quantity of the holding */
+            quantity: number;
         };
     };
     responses: never;

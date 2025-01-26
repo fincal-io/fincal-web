@@ -11,17 +11,15 @@
 	fill="none"
 >
 	<path
-		d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z"
-		stroke={color}
-		stroke-width="1.5"
-		stroke-linecap="round"
-		stroke-linejoin="round"
+		fill-rule="evenodd"
+		clip-rule="evenodd"
+		d="M12 2.75C12.6904 2.75 13.25 3.30964 13.25 4V20C13.25 20.6904 12.6904 21.25 12 21.25C11.3096 21.25 10.75 20.6904 10.75 20V4C10.75 3.30964 11.3096 2.75 12 2.75Z"
+		fill="currentColor"
 	/>
 	<path
-		d="M12 8V16M16 12H8"
-		stroke={color}
-		stroke-width="1.5"
-		stroke-linecap="round"
-		stroke-linejoin="round"
+		fill-rule="evenodd"
+		clip-rule="evenodd"
+		d="M2.75 12C2.75 11.3096 3.30964 10.75 4 10.75H20C20.6904 10.75 21.25 11.3096 21.25 12C21.25 12.6904 20.6904 13.25 20 13.25H4C3.30964 13.25 2.75 12.6904 2.75 12Z"
+		fill="currentColor"
 	/>
 </svg>

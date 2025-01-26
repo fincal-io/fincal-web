@@ -10,6 +10,7 @@
 		value?: string;
 		required?: boolean;
 		faded?: boolean;
+		size?: 'md' | 'lg';
 	}
 
 	let {
@@ -17,13 +18,14 @@
 		label = '',
 		disabled = false,
 		name = '',
+		size = 'md',
 		value = '',
 		required = false,
 		faded = false
 	}: Props = $props();
 </script>
 
-<label class="checkbox-container" class:disabled class:checked class:faded>
+<label class={['checkbox-container', size]} class:disabled class:checked class:faded>
 	<input type="checkbox" {name} {value} {disabled} {required} bind:checked />
 	{#if checked}
 		<div class="checkmark">
@@ -38,15 +40,29 @@
 
 <style>
 	.checkbox-container {
-		width: 20px;
-		height: 20px;
+		width: var(--size);
+		height: var(--size);
 		position: relative;
-		background-color: var(--md-surface-container-high);
+		background-color: var(--color-container-high);
 		border-radius: 2px;
 		cursor: pointer;
 
 		&.faded {
-			background-color: var(--md-surface-container-highest);
+			background-color: var(--color-container-highest);
+		}
+
+		input[type='checkbox'] {
+			width: var(--size);
+			height: var(--size);
+			opacity: 0;
+		}
+
+		&.md {
+			--size: 20px;
+		}
+
+		&.lg {
+			--size: 28px;
 		}
 	}
 
@@ -56,11 +72,5 @@
 		display: grid;
 		place-items: center;
 		z-index: 2;
-	}
-
-	input[type='checkbox'] {
-		width: 20px;
-		height: 20px;
-		opacity: 0;
 	}
 </style>

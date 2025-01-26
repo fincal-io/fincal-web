@@ -24,6 +24,8 @@
 
 	import { page } from '$app/state';
 	import { replaceState, onNavigate } from '$app/navigation';
+	import DepositIcon from '../../icons/depositIcon.svelte';
+	import IntegrationIcon from '../../icons/integrationIcon.svelte';
 
 	onNavigate(() => {
 		navState$.open = false;
@@ -119,6 +121,15 @@
 		>
 			<InvestmentIcon color="var(--md-on-surface-variant)" />
 			<p class="name">Investments</p>
+		</a>
+		<a
+			class="nav-item"
+			class:active={basePath$ === 'deposits'}
+			data-sveltekit-replacestate
+			href="/deposits"
+		>
+			<DepositIcon color="var(--md-on-surface-variant)" />
+			<p class="name">Deposits</p>
 		</a>
 		<a
 			class="nav-item"
@@ -244,6 +255,15 @@
 			<DocumentationIcon color="var(--md-on-surface-variant)" />
 			<p class="name">Documentation</p>
 		</a>
+		<a
+			class="nav-item"
+			class:active={basePath$ === 'integrations'}
+			data-sveltekit-replacestate
+			href="/integrations"
+		>
+			<IntegrationIcon color="var(--md-on-surface-variant)" />
+			<p class="name">Integrations</p>
+		</a>
 		<a class="nav-item" href="/switch">
 			<SwitchWorkspaceIcon color="var(--md-on-surface-variant)" />
 			<span class="name">Switch Workspace</span>
@@ -348,7 +368,7 @@
 	.nav-item {
 		display: flex;
 		align-items: center;
-		padding: 12px 16px;
+		padding: 10px 12px;
 		cursor: pointer;
 		gap: 12px;
 		border-radius: 6px;
@@ -360,7 +380,7 @@
 
 		span,
 		p {
-			font-size: 14px;
+			font-size: 13px;
 			color: var(--color-low);
 			font-weight: 500;
 		}

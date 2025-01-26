@@ -7,12 +7,14 @@
 		currencyId,
 		value,
 		update,
+		borderless = false,
 		...rest
 	}: {
 		currencyId?: string;
 		placeholder?: string;
 		update?: (value: number) => void;
 		value?: number;
+		borderless?: boolean;
 	} = $props();
 
 	let open$ = $state(false);
@@ -31,11 +33,17 @@
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
-<div class="input-wrapper" role="button" tabindex="0" onclick={() => (open$ = true)}>
+<div
+	class="input-wrapper"
+	role="button"
+	tabindex="0"
+	onclick={() => (open$ = true)}
+	class:borderless
+>
 	{#if value === undefined || value === null}
 		<p class:focused={open$} class="placeholder">{total}</p>
 	{:else}
-		<p class:focused={open$}>{total}</p>
+		<p class="price-text" class:focused={open$}>{total}</p>
 	{/if}
 </div>
 
@@ -65,15 +73,26 @@
 		width: 100%;
 		display: flex;
 		align-items: center;
-		background-color: var(--md-surface-container-high);
-		border-radius: 4px;
+		background-color: transparent;
+		border-radius: 6px;
+		border: 1px solid var(--color-border-variant);
+		background-color: var(--color-surface-low);
+
+		&.faded {
+			background-color: var(--md-surface-container-highest);
+		}
+
+		&.borderless {
+			border: none;
+			background-color: transparent;
+		}
 	}
 
 	p {
 		width: 100%;
-		padding: 12px 12px;
+		padding: 12px;
 		border: 1px solid transparent;
-		font-size: 13px;
+		font-size: 16px;
 		letter-spacing: 0.01em;
 		background-color: transparent;
 		border: 1px solid transparent;
@@ -81,7 +100,7 @@
 
 		&.focused {
 			outline: none;
-			border: 1px solid var(--md-primary);
+			border: 1px solid var(--color-primary);
 		}
 	}
 
@@ -106,7 +125,7 @@
 	}
 
 	.currency-editor-container {
-		background-color: var(--md-surface-container);
+		background-color: var(--color-container);
 		position: fixed;
 
 		bottom: 0;

@@ -12,6 +12,7 @@
 <style lang="scss">
 	.form-group {
 		width: 100%;
+		padding: 16px 18px;
 	}
 
 	label {

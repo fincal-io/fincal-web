@@ -1,30 +1,38 @@
 <script lang="ts">
 	import { currencyFormatter } from '../actions/currency.formatter.svelte';
+	import { workspaceState$ } from '../states/workspace.state.svelte';
+	import { outsideClick } from '../utils/outside-click';
 	import IconButton from './button/iconButton.svelte';
+	import CurrencyDialPad from './currency-dial-pad.svelte';
 
 	let {
 		title = '',
 		value = 0,
 		currencyId = '',
-		editable = false
-	}: { title?: string; value?: number; currencyId?: string; editable?: boolean } = $props();
+		attached = false
+	}: {
+		title?: string;
+		value?: number;
+		currencyId?: string;
+		attached?: boolean;
+	} = $props();
 </script>
 
-<div class="info-header">
+<div class="info-header" class:attached>
 	<h2>{title}</h2>
 
-	<div class="row">
-		<IconButton>
-			<p class="active">{currencyId}</p>
-		</IconButton>
-		<p class="value price-text" use:currencyFormatter={{ amount: value, currency: currencyId }}></p>
-	</div>
+	<p class="value price-text" use:currencyFormatter={{ amount: value, currency: currencyId }}></p>
 </div>
 
 <style lang="scss">
 	.info-header {
 		background-color: var(--color-surface-low);
-		padding: 28px 22px;
+		padding: 24px 18px;
+		position: relative;
+
+		&.attached {
+			padding-bottom: 8px;
+		}
 
 		h2 {
 			font-size: 12px;
@@ -35,22 +43,13 @@
 			font-weight: 500;
 		}
 
-		p.value {
+		.value {
 			font-size: 36px;
 			font-weight: 500;
-		}
-	}
-
-	.row {
-		display: flex;
-		align-items: center;
-		gap: 12px;
-
-		.active {
-			font-size: 12px;
-			text-transform: uppercase;
-			font-weight: 600;
-			color: var(--color-text-lower);
+			background-color: transparent;
+			outline: none;
+			border: none;
+			cursor: pointer;
 		}
 	}
 </style>

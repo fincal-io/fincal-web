@@ -1,8 +1,8 @@
 <script lang="ts">
-	let { size = 'md' }: { size?: 'sm' | 'md' | 'lg' } = $props();
+	let { size = 'md', dark = false }: { size?: 'sm' | 'md' | 'lg'; dark?: boolean } = $props();
 </script>
 
-<div class={['circle', size]}></div>
+<div class={['circle', size, { dark }]}></div>
 
 <style>
 	.circle {
@@ -19,6 +19,10 @@
 
 		&.lg {
 			--size: 60px;
+		}
+
+		&.dark {
+			--color: var(--color-surface);
 		}
 
 		height: var(--size);

@@ -1,13 +1,25 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import type { BreadcrumbItem } from '../../../../components/breadcrumb.svelte';
 	import Header from '../../../../components/header.svelte';
+	import Menu, { type MenuOption } from '../../../../components/menu.svelte';
 
-	const breadcrumbs: BreadcrumbItem[] = [
+	const menuItems: MenuOption[] = [
 		{
-			name: 'Home',
-			href: '/home'
+			id: 'edit',
+			label: 'Edit template'
 		}
 	];
+
+	const onSelect = (opt: MenuOption) => {
+		switch (opt.id) {
+			case 'edit':
+				goto('/budget/template');
+				break;
+		}
+	};
 </script>
 
-<Header {breadcrumbs} />
+<Header title="Budget">
+	<Menu options={menuItems} select={onSelect} />
+</Header>

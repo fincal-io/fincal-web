@@ -22,7 +22,7 @@
 <style lang="scss">
 	button {
 		background-color: transparent;
-		color: var(--md-on-surface-variant);
+		color: var(--color-text-low);
 		border: none;
 		border-radius: 4px;
 		padding: 10px 16px;
@@ -39,12 +39,12 @@
 		}
 
 		&:hover {
-			background-color: var(--md-surface-container-low);
+			background-color: var(--color-container-low);
 		}
 
 		&.faded {
-			background-color: var(--md-tertiary-container);
-			color: var(--md-on-tertiary-container);
+			background-color: var(--color-surface-low);
+			color: var(--color-text-low);
 
 			&:hover {
 				opacity: 0.9;
