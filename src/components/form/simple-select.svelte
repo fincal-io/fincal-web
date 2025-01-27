@@ -2,13 +2,24 @@
 	export type SelectItem = {
 		label: string;
 		value: string;
+		attributes?: {
+			color?: string;
+			icon?: string;
+		};
 	};
 </script>
 
 <script lang="ts">
+	import AddCircleIcon from '../../icons/addCircleIcon.svelte';
+
+	import AddIcon from '../../icons/addIcon.svelte';
+
+	import CloseIcon from '../../icons/closeIcon.svelte';
+
 	import SelectArrowDownIcon from '../../icons/selectArrowDownIcon.svelte';
 
 	import { outsideClick } from '../../utils/outside-click';
+	import IconButton from '../button/iconButton.svelte';
 
 	let {
 		children,
@@ -16,13 +27,18 @@
 		value,
 		change = () => {},
 		options = [],
+		reset,
+		add,
 		...rest
 	}: {
 		children?: any;
 		value?: string;
 		placeholder?: string;
 		options?: SelectItem[];
+		canReset?: boolean;
 		change?: (value: string) => void;
+		reset?: () => void;
+		add?: () => void;
 	} = $props();
 
 	const label = $derived(options.find((option) => option.value === value)?.label ?? '');
@@ -36,13 +52,31 @@
 	class:active={open$}
 	use:outsideClick={{ handler: () => (open$ = false) }}
 >
-	<button class="select" class:empty={!label} onclick={() => (open$ = !open$)}>
-		<p>{label || placeholder}</p>
+	<div class="row">
+		<button class="select" class:empty={!label} onclick={() => (open$ = !open$)}>
+			<p>{label || placeholder}</p>
 
-		<div class="icon" class:open={open$}>
-			<SelectArrowDownIcon size={16} color="var(--md-surface-variant)" />
-		</div>
-	</button>
+			<div class="icon" class:open={open$}>
+				<SelectArrowDownIcon size={16} color="var(--md-surface-variant)" />
+			</div>
+		</button>
+
+		{#if reset || add}
+			<div class="actions">
+				{#if reset}
+					<IconButton onclick={() => reset?.()}>
+						<CloseIcon color="var(--color-text-lower)" />
+					</IconButton>
+				{/if}
+
+				{#if add}
+					<IconButton onclick={() => add?.()}>
+						<AddCircleIcon color="var(--color-text-lower)" />
+					</IconButton>
+				{/if}
+			</div>
+		{/if}
+	</div>
 
 	<div class="options" class:open={open$}>
 		{#each options as option}
@@ -74,6 +108,24 @@
 
 		&.active {
 			border: 1px solid var(--color-primary);
+		}
+	}
+
+	.row {
+		display: flex;
+		width: 100%;
+		align-items: center;
+
+		button {
+			flex: 1 1 auto;
+		}
+
+		.actions {
+			flex: 0 0 auto;
+			padding-right: 6px;
+			display: flex;
+			align-items: center;
+			gap: 4px;
 		}
 	}
 

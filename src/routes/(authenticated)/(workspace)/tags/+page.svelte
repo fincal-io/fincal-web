@@ -10,60 +10,57 @@
 	import Table from '../../../../components/table/table.svelte';
 	import TableRow from '../../../../components/table/table-row.svelte';
 	import TableCell from '../../../../components/table/table-cell.svelte';
-
-	const breadcrumbs: BreadcrumbItem[] = [
-		{
-			name: 'Home',
-			href: '/home'
-		},
-		{
-			name: 'Tags',
-			href: '/tags'
-		}
-	];
-
-	const add = () => {
-		goto(`/tags/new`);
-	};
+	import SimpleList, { type ListItem } from '../../../../components/simple-list.svelte';
+	import { addNewTag } from '../../../../components/tag/add-tag.svelte';
 
 	let tags$ = $state([] as components['schemas']['tag_entity'][]);
 
-	onMount(async () => {
+	const fetchTags = async () => {
 		const { data } = await api.GET('/api/v1/tags/');
 
 		tags$ = data || [];
+	};
+
+	let options$ = $derived.by(() => {
+		return tags$.map((tag) => ({
+			id: tag.id ?? '',
+			name: tag.name ?? '',
+			icon: `color::${tag.color}`
+		}));
 	});
+
+	const add = async () => {
+		const id = await addNewTag(null);
+
+		if (id) {
+			await fetchTags();
+		}
+	};
+
+	onMount(async () => {
+		fetchTags();
+	});
+
+	const edit = async (item: ListItem) => {
+		const tag = tags$.find((i) => i.id === item.id);
+
+		if (tag) {
+			const id = await addNewTag({
+				...tag,
+				color: tag.color?.replace('color::', '') ?? ''
+			});
+
+			if (id) {
+				await fetchTags();
+			}
+		}
+	};
 </script>
 
-<Header {breadcrumbs}>
+<Header title="Tags">
 	<IconButton onclick={() => add()}>
 		<AddIcon />
 	</IconButton>
 </Header>
 
-<div class="content">
-	<Table>
-		{#each tags$ as tag}
-			<TableRow onclick={() => goto(`/tags/${tag.id}`)}>
-				<TableCell>
-					<span class="color" style="background-color: {tag.color}"></span>
-				</TableCell>
-				<TableCell max>{tag.name}</TableCell>
-			</TableRow>
-		{/each}
-	</Table>
-</div>
-
-<style lang="scss">
-	.content {
-		padding: 6px 8px 6px 10px;
-	}
-
-	.color {
-		height: 18px;
-		display: block;
-		width: 18px;
-		border-radius: 4px;
-		background-color: white;
-	}
-</style>
+<SimpleList title="All Tags" items={options$} onClick={(e) => edit(e)} />

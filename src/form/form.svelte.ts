@@ -4,6 +4,8 @@ import type { Validator } from './validator.svelte';
 import MoneyInput from './element/money-input.svelte';
 import TextInput from './element/text-input.svelte';
 import Emittery from 'emittery';
+import IconInput from './element/icon-input.svelte';
+import ColorInput from './element/color-input.svelte';
 
 export type FormFieldDefinition = {
 	type: string;
@@ -157,3 +159,5 @@ export const registerFormElement = (element: string, component: FormElement) => 
 
 registerFormElement('text', TextInput);
 registerFormElement('money', MoneyInput);
+registerFormElement('icon', IconInput);
+registerFormElement('color', ColorInput);

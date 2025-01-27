@@ -11,12 +11,13 @@
 		form,
 		title = '',
 		close = () => {},
-		submit = async (value: any) => {}
+		submit = async (value: any) => {},
+		asBottomSheet = false
 	}: {
 		form: ReturnType<typeof createForm>;
 		title?: string;
 		close?: () => void;
-
+		asBottomSheet?: boolean;
 		submit?: (value: any) => Promise<void | string>;
 	} = $props();
 
@@ -105,7 +106,7 @@
 	});
 </script>
 
-<Header {title} showNav={false}>
+<Header {title} showNav={false} transparent={asBottomSheet}>
 	<IconButton onclick={close}>
 		<MultiplyIcon color="var(--color-text-lower)"></MultiplyIcon>
 	</IconButton>

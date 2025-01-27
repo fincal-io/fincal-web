@@ -8,16 +8,18 @@
 		breadcrumbs = [],
 		children,
 		title = '',
-		showNav = true
+		showNav = true,
+		transparent = false
 	}: {
 		breadcrumbs?: BreadcrumbItem[];
 		children?: any;
 		title?: string;
 		showNav?: boolean;
+		transparent?: boolean;
 	} = $props();
 </script>
 
-<header>
+<header class:transparent>
 	{#if showNav}
 		<IconButton onclick={() => (navState$.open = true)}>
 			<NavIcon></NavIcon>
@@ -49,6 +51,10 @@
 
 		.spacer {
 			width: 24px;
+		}
+
+		&.transparent {
+			background-color: transparent;
 		}
 	}
 

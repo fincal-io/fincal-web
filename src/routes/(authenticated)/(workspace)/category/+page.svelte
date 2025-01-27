@@ -10,58 +10,55 @@
 	import Table from '../../../../components/table/table.svelte';
 	import TableRow from '../../../../components/table/table-row.svelte';
 	import TableCell from '../../../../components/table/table-cell.svelte';
-
-	const breadcrumbs: BreadcrumbItem[] = [
-		{
-			name: 'Home',
-			href: '/home'
-		},
-		{
-			name: 'Categories',
-			href: '/category'
-		}
-	];
-
-	const add = () => {
-		goto(`/category/new`);
-	};
+	import { addNewCategory } from '../../../../components/category/add-category.svelte';
+	import type { ListItem } from '../../../../components/simple-list.svelte';
+	import SimpleList from '../../../../components/simple-list.svelte';
 
 	let categories$ = $state([] as components['schemas']['category_entity'][]);
 
-	onMount(async () => {
+	const fetchCategories = async () => {
 		const { data } = await api.GET('/api/v1/categories/');
 
 		categories$ = data || [];
+	};
+
+	let options$ = $derived.by(() => {
+		return categories$.map((category) => ({
+			id: category.id ?? '',
+			name: category.name ?? '',
+			icon: category.icon || ' '
+		}));
 	});
+
+	const add = async () => {
+		const id = await addNewCategory(null);
+
+		if (id) {
+			await fetchCategories();
+		}
+	};
+
+	onMount(async () => {
+		fetchCategories();
+	});
+
+	const edit = async (item: ListItem) => {
+		const category = categories$.find((i) => i.id === item.id);
+
+		if (category) {
+			const id = await addNewCategory(category);
+
+			if (id) {
+				await fetchCategories();
+			}
+		}
+	};
 </script>
 
-<Header {breadcrumbs}>
+<Header title="Categories">
 	<IconButton onclick={() => add()}>
 		<AddIcon />
 	</IconButton>
 </Header>
 
-<div class="content">
-	<Table>
-		{#each categories$ as category}
-			<TableRow onclick={() => goto(`/category/${category.id}`)}>
-				<TableCell>
-					<span class={['icon ti', category.icon?.replace('icon::', '')]}></span>
-				</TableCell>
-				<TableCell max>{category.name}</TableCell>
-			</TableRow>
-		{/each}
-	</Table>
-</div>
-
-<style lang="scss">
-	.content {
-		padding: 6px 8px 6px 10px;
-	}
-
-	.icon {
-		font-size: 22px;
-		display: block;
-		background-color: transparent;
-	}
-</style>
+<SimpleList title="All Categories" items={options$} onClick={(e) => edit(e)} />

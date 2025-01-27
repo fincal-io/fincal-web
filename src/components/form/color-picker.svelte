@@ -167,16 +167,17 @@
 		width: 100%;
 		display: flex;
 		align-items: center;
-		background-color: var(--md-surface-container-high);
-		border-radius: 4px;
-		cursor: pointer;
+		background-color: transparent;
+		border-radius: 6px;
+		border: 1px solid var(--color-border-variant);
+		background-color: var(--color-surface-low);
 	}
 
 	p {
 		width: 100%;
-		padding: 12px 12px;
+		padding: 10px 12px;
 		border: 1px solid transparent;
-		font-size: 13px;
+		font-size: 16px;
 		letter-spacing: 0.01em;
 		background-color: transparent;
 		border: 1px solid transparent;
@@ -217,13 +218,13 @@
 	}
 
 	.currency-editor-container {
-		background-color: var(--md-surface-container);
+		background-color: var(--color-container);
 		position: fixed;
 
 		bottom: 0;
 		left: 0;
 		right: 0;
-		height: 400px;
+		height: 600px;
 		max-height: calc(100dvh - 60px);
 
 		z-index: var(--z-index-nav);
@@ -275,7 +276,7 @@
 				height: 48px;
 				width: 48px;
 				border-radius: 4px;
-				border: 1px solid var(--md-outline);
+				border: 1px solid var(--color-border-form);
 			}
 		}
 	}

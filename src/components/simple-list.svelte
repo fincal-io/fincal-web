@@ -45,7 +45,14 @@
 				<!-- svelte-ignore a11y_click_events_have_key_events -->
 				<div class="list-item" onclick={() => onClick(item)} role="button" tabindex="0">
 					{#if item.icon}
-						<div class="logo"></div>
+						<div class="logo">
+							{#if item.icon.startsWith('color::')}
+								<span class="color" style="background-color: {item.icon.replace('color::', '')}"
+								></span>
+							{:else}
+								<span class="icon ti {item.icon.replace('icon::', '')}"> </span>
+							{/if}
+						</div>
 					{/if}
 					<div class="info">
 						<p class="name">{item.name}</p>
@@ -104,7 +111,7 @@
 
 	.list {
 		.list-item {
-			padding: 16px 18px;
+			padding: 14px 18px;
 			display: flex;
 			gap: 12px;
 			align-items: center;
@@ -112,10 +119,25 @@
 
 			.logo {
 				flex: 0 0 auto;
-				background-color: white;
+				background-color: var(--color-surface-lower);
 				width: 36px;
 				height: 36px;
 				border-radius: 100px;
+
+				display: grid;
+				place-items: center;
+
+				.color {
+					height: 16px;
+					display: block;
+					width: 16px;
+					border-radius: 40px;
+					background-color: white;
+				}
+
+				.icon {
+					font-size: 18px;
+				}
 			}
 
 			.info {

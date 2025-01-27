@@ -130,16 +130,21 @@
 		width: 100%;
 		display: flex;
 		align-items: center;
-		background-color: var(--md-surface-container-high);
-		border-radius: 4px;
-		cursor: pointer;
+		background-color: transparent;
+		border-radius: 6px;
+		border: 1px solid var(--color-border-variant);
+		background-color: var(--color-surface-low);
+
+		// &.faded {
+		// 	background-color: var(--md-surface-container-highest);
+		// }
 	}
 
 	p {
 		width: 100%;
-		padding: 9px 12px;
+		padding: 10px 12px;
 		border: 1px solid transparent;
-		font-size: 13px;
+		font-size: 16px;
 		letter-spacing: 0.01em;
 		background-color: transparent;
 		border: 1px solid transparent;
@@ -147,10 +152,11 @@
 
 		&.focused {
 			outline: none;
-			border: 1px solid var(--md-primary);
+			border: 1px solid var(--color-primary);
 		}
 
 		&.placeholder {
+			color: var(--color-text-low);
 			padding: 12px 12px;
 		}
 
@@ -184,7 +190,7 @@
 	}
 
 	.currency-editor-container {
-		background-color: var(--md-surface-container);
+		background-color: var(--color-container);
 		position: fixed;
 
 		bottom: 0;
@@ -241,7 +247,7 @@
 			height: 48px;
 			width: 48px;
 			border-radius: 4px;
-			border: 1px solid var(--md-outline);
+			border: 1px solid var(--color-border-form);
 
 			.color-block {
 				font-size: 24px;
