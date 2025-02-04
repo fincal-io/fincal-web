@@ -29,12 +29,28 @@
 		});
 	});
 
-	let components = form.controls.filter(({ label, control }) => {
-		if (control.type === 'hidden' || control.type === 'account-picker') {
-			return false;
-		}
+	let components$ = $derived.by(() => {
+		return form.controls
+			.filter(({ label, control }) => {
+				if (control.type === 'hidden' || control.type === 'account-picker') {
+					return false;
+				}
 
-		return true;
+				return true;
+			})
+			.map((c) => {
+				if (c.control?.attributesBuilder) {
+					return {
+						...c,
+						control: {
+							...c.control,
+							attributes: c.control.attributesBuilder(value$)
+						}
+					};
+				}
+
+				return c;
+			});
 	});
 
 	onMount(() => {
@@ -113,7 +129,7 @@
 </Header>
 
 <div class="content">
-	{#each components as { label, control }}
+	{#each components$ as { label, control }}
 		{@const Block = formElements[control.type]}
 
 		{#if Block}
@@ -121,7 +137,10 @@
 				{control}
 				form={{ value$ }}
 				setValue={(value) => {
-					value$[label] = value;
+					value$ = {
+						...value$,
+						[label]: value
+					};
 				}}
 				updateState={(cb) => {
 					value$ = {

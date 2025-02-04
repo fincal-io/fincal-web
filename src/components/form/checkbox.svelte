@@ -48,7 +48,7 @@
 		cursor: pointer;
 
 		&.faded {
-			background-color: var(--color-container-highest);
+			background-color: var(--color-container-high);
 		}
 
 		input[type='checkbox'] {

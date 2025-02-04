@@ -892,7 +892,7 @@ export interface paths {
         };
         trace?: never;
     };
-    "/api/v1/budgets{id}": {
+    "/api/v1/budgets/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -921,7 +921,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["budget_template_entity"][];
+                        "application/json": components["schemas"]["budget_template_entity"];
                     };
                 };
             };
@@ -3222,6 +3222,12 @@ export interface components {
         budget_template_entity: {
             /** @description The id of the budget template */
             id?: string;
+            /** @description The income of the budget template */
+            income?: number;
+            /** @description Whether the income is automatically calculated */
+            autoIncome?: boolean;
+            /** @description Whether to add others to the budget template */
+            addOthers?: boolean;
             /** @description The groups of the budget template */
             groups?: {
                 /** @description The id of the budget group */
@@ -3229,16 +3235,14 @@ export interface components {
                 /** @description The name of the budget group */
                 name?: string;
                 /** @description The categories of the budget group */
-                categories?: {
+                items?: {
                     /** @description The id of the budget category */
                     id: string;
-                    /** @description The name of the budget category */
-                    name: string;
-                    /** @description The category id of the budget category */
-                    categoryId?: string;
-                    /** @description The icon of the budget category */
-                    icon: string;
-                    /** @description The amount of the budget category */
+                    /** @description The category id of the budget group */
+                    categoryId: string;
+                    /** @description The tag id of the budget group */
+                    tagId?: string;
+                    /** @description The amount of the budget group */
                     amount: number;
                 }[];
             }[];
@@ -3262,18 +3266,22 @@ export interface components {
          *       ]
          *     } */
         budget_template_insert: {
+            /** @description The income of the budget template */
+            income?: number;
+            /** @description Whether the income is automatically calculated */
+            autoIncome?: boolean;
+            /** @description Whether to add others to the budget template */
+            addOthers?: boolean;
             /** @description The groups of the budget template */
             groups: {
                 /** @description The name of the budget group */
                 name: string;
                 /** @description The categories of the budget group */
-                categories: {
-                    /** @description The name of the budget category */
-                    name: string;
+                items: {
                     /** @description The category id of the budget category */
                     categoryId: string;
-                    /** @description The icon of the budget category */
-                    icon?: string;
+                    /** @description The tag id of the budget group */
+                    tagId?: string;
                     /** @description The amount of the budget category */
                     amount: number;
                 }[];

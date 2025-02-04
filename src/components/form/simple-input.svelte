@@ -38,7 +38,7 @@
 		background-color: var(--color-surface-low);
 
 		&.faded {
-			background-color: var(--md-surface-container-highest);
+			background-color: var(--color-container-high);
 		}
 	}
 

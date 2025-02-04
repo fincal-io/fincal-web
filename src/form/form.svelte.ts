@@ -6,6 +6,8 @@ import TextInput from './element/text-input.svelte';
 import Emittery from 'emittery';
 import IconInput from './element/icon-input.svelte';
 import ColorInput from './element/color-input.svelte';
+import SelectInput from './element/select-input.svelte';
+import MultiSelectInput from './element/multi-select-input.svelte';
 
 export type FormFieldDefinition = {
 	type: string;
@@ -103,6 +105,7 @@ const FormSymbol = Symbol('SVF_Form');
 export type FormControl = {
 	type: string;
 	attributes?: Record<string, any>;
+	attributesBuilder?: (value: any) => Record<string, any>;
 	validators?: Validator[];
 	defaultValue?: any;
 	unmanaged?: boolean;
@@ -161,3 +164,5 @@ registerFormElement('text', TextInput);
 registerFormElement('money', MoneyInput);
 registerFormElement('icon', IconInput);
 registerFormElement('color', ColorInput);
+registerFormElement('select', SelectInput);
+registerFormElement('multi-select', MultiSelectInput);

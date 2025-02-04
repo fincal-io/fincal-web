@@ -13,17 +13,21 @@
 	import type { MenuOption } from '../../../../../components/menu.svelte';
 	import Menu from '../../../../../components/menu.svelte';
 	import AddIcon from '../../../../../icons/addIcon.svelte';
-	import { workspaceState$ } from '../../../../../states/workspace.state.svelte';
+	import {
+		fetchWorkspaceInfo,
+		workspaceState$
+	} from '../../../../../states/workspace.state.svelte';
 	import { v4 as uuid } from 'uuid';
 	import { api } from '../../../../../api/api';
 	import SimpleSelect from '../../../../../components/form/simple-select.svelte';
 	import { currencyFormatter } from '../../../../../actions/currency.formatter.svelte';
 	import { addNewCategory } from '../../../../../components/category/add-category.svelte';
 	import { addNewTag } from '../../../../../components/tag/add-tag.svelte';
+	import { goto } from '$app/navigation';
 
 	interface Item {
 		id: string;
-		tagIds: string[];
+		tagId: string;
 		categoryId: string;
 		amount: number;
 	}
@@ -37,6 +41,7 @@
 	let template$ = $state({
 		income: 0,
 		autoIncome: true,
+		addOthers: true,
 		groups: [] as Group[]
 	});
 
@@ -84,9 +89,65 @@
 			})) ?? [];
 	};
 
+	const fetchBudget = async () => {
+		if (!workspaceState$.workspace?.activeBudgetTemplateId) {
+			return;
+		}
+
+		const budgetReq = await api.GET('/api/v1/budgets/{id}', {
+			params: { path: { id: workspaceState$.workspace?.activeBudgetTemplateId } }
+		});
+
+		if (budgetReq.data) {
+			template$ = budgetReq.data as any;
+		}
+	};
+
 	onMount(async () => {
 		fetchTags();
 		fetchCategories();
+		fetchBudget();
+	});
+
+	let loading$ = $state(false);
+
+	const update = async () => {
+		if (!template$.groups.length || template$.groups.find((g) => !g.items.length)) {
+			return;
+		}
+
+		try {
+			loading$ = true;
+
+			const { data } = await api.POST('/api/v1/budgets/', {
+				body: template$
+			});
+
+			if (data?.id) {
+				await fetchWorkspaceInfo();
+				goto('/budget', { replaceState: true });
+			}
+		} catch (e) {
+			console.error(e);
+		} finally {
+			loading$ = false;
+		}
+	};
+
+	let remaining$ = $derived.by(() => {
+		const income = template$.income;
+
+		if (!income) {
+			return 0;
+		}
+
+		return (
+			income -
+			template$.groups.reduce(
+				(acc, group) => acc + group.items.reduce((acc, item) => acc + item.amount, 0),
+				0
+			)
+		);
 	});
 </script>
 
@@ -111,7 +172,7 @@
 
 	<div class="row">
 		<p class="label">Add "others" for unspecified expenses</p>
-		<Checkbox size="lg" bind:checked={template$.autoIncome} />
+		<Checkbox size="lg" bind:checked={template$.addOthers} />
 	</div>
 
 	<div class="groups">
@@ -145,7 +206,7 @@
 
 				<div class="items">
 					{#each group.items as item}
-						{@const tag = tagOptions$.find((o) => o.value === item.tagIds[0])}
+						{@const tag = tagOptions$.find((o) => o.value === item.tagId)}
 						<div class="item">
 							<p class="label">
 								{#if tag}
@@ -196,12 +257,15 @@
 						<div class="ticker">
 							<div class="info">
 								<p class="title">Budgeted</p>
-								<p class="amount" use:currencyFormatter={100}></p>
+								<p
+									class="amount"
+									use:currencyFormatter={group.items.reduce((acc, item) => acc + item.amount, 0)}
+								></p>
 							</div>
 
 							<div class="info">
 								<p class="title">Remaining</p>
-								<p class="amount" use:currencyFormatter={55}></p>
+								<p class="amount" use:currencyFormatter={remaining$}></p>
 							</div>
 						</div>
 
@@ -210,7 +274,7 @@
 								activeItem$ = {
 									id: uuid(),
 									groupId: group.id,
-									tagIds: [],
+									tagId: '',
 									categoryId: '',
 									amount: 0
 								};
@@ -235,6 +299,10 @@
 			}}>New Group</TextButton
 		>
 	</div>
+</div>
+
+<div class="footer">
+	<FilledButton block loading={loading$} onclick={update}>Update template</FilledButton>
 </div>
 
 <BottomSheet open={activeGroup$ !== null} close={() => (activeGroup$ = null)}>
@@ -308,27 +376,27 @@
 		<FormGroup label="Tag (optional)">
 			<SimpleSelect
 				add={async () => {
-					const id = await addNewTag();
+					const id = await addNewTag(null);
 
 					if (id) {
 						await fetchTags();
 
 						if (activeItem$) {
-							activeItem$.tagIds = [id];
+							activeItem$.tagId = id;
 						}
 					}
 				}}
 				reset={() => {
 					if (activeItem$) {
-						activeItem$.tagIds = [];
+						activeItem$.tagId = '';
 					}
 				}}
 				options={tagOptions$}
 				placeholder="Select a tag"
-				value={activeItem$.tagIds[0]}
+				value={activeItem$.tagId}
 				change={(v) => {
 					if (activeItem$) {
-						activeItem$.tagIds = [v];
+						activeItem$.tagId = v;
 					}
 				}}
 			/>
@@ -341,7 +409,7 @@
 					const { groupId, ...item } = {
 						groupId: activeItem$?.groupId ?? '',
 						id: activeItem$?.id ?? '',
-						tagIds: activeItem$?.tagIds ?? [],
+						tagId: activeItem$?.tagId ?? '',
 						categoryId: activeItem$?.categoryId ?? '',
 						amount: activeItem$?.amount ?? 0
 					};
@@ -426,6 +494,9 @@
 
 	.groups {
 		padding: 16px;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
 	}
 
 	.sheet-footer {
@@ -490,5 +561,21 @@
 				}
 			}
 		}
+	}
+
+	.content {
+		padding-bottom: 100px;
+	}
+
+	.footer {
+		padding: 16px;
+		background-color: var(--color-surface);
+
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+
+		border-top: 1px solid var(--color-border-variant);
 	}
 </style>

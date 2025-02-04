@@ -8,11 +8,13 @@
 			currencyId: string;
 		};
 		id: string;
+		open?: boolean;
 	};
 </script>
 
 <script lang="ts">
 	import { currencyFormatter } from '../actions/currency.formatter.svelte';
+	import ArrowRightIcon from '../icons/arrowRightIcon.svelte';
 
 	import EmptyIcon from '../icons/emptyIcon.svelte';
 
@@ -62,6 +64,12 @@
 						{/if}
 					</div>
 
+					{#if item.open}
+						<div class="switch">
+							<ArrowRightIcon size={22} />
+						</div>
+					{/if}
+
 					{#if item.balance}
 						<div
 							class="amount price-text"
@@ -87,6 +95,11 @@
 			font-weight: 500;
 			font-size: 14px;
 		}
+	}
+
+	.switch {
+		flex: 0 0 auto;
+		opacity: 0.6;
 	}
 
 	.no-result {

@@ -93,7 +93,7 @@
 			tabindex="0"
 		>
 			<div class="query">
-				<SimpleInput faded placeholder="Search" bind:value={query$} />
+				<SimpleInput faded placeholder="Search" value={query$} setValue={(e) => (query$ = e)} />
 
 				<IconButton
 					size="lg"
@@ -103,7 +103,7 @@
 					}}
 				>
 					<CheckFilledIcon
-						color={showSelected$ ? 'var(--md-on-surface-variant)' : 'var(--md-secondary-container)'}
+						color={showSelected$ ? 'var(--color-text-lowest)' : 'var(--color-border-form)'}
 					/>
 				</IconButton>
 			</div>
@@ -136,7 +136,7 @@
 			</div>
 
 			<div class="action">
-				<FilledButton onclick={() => (open$ = false)} block size="lg">Save</FilledButton>
+				<FilledButton onclick={() => (open$ = false)} block size="md">Save</FilledButton>
 			</div>
 		</div>
 	</div>
@@ -147,19 +147,19 @@
 		width: 100%;
 		display: flex;
 		align-items: center;
-		background-color: var(--md-surface-container-high);
+		border: 1px solid var(--color-border-variant);
+		background-color: var(--color-surface-low);
 		border-radius: 4px;
-		border: 1px solid transparent;
 		position: relative;
 
 		&.active {
-			border: 1px solid var(--md-primary);
+			border: 1px solid var(--color-primary);
 		}
 	}
 
 	.select {
 		width: 100%;
-		padding: 11px 12px;
+		padding: 12px;
 		border: 1px solid transparent;
 		background-color: transparent;
 		outline: none;
@@ -170,12 +170,13 @@
 
 		p {
 			flex: 1 1 auto;
-			font-size: 13px;
+			font-size: 16px;
+			letter-spacing: 0.01em;
 		}
 
 		&.empty {
 			p {
-				color: var(--md-on-surface-variant);
+				color: var(--color-text-lower);
 				opacity: 0.4;
 			}
 		}
@@ -207,7 +208,7 @@
 		.dialog {
 			width: 100%;
 			height: 100%;
-			background-color: var(--md-surface-container-high);
+			background-color: var(--color-surface-low);
 			border-radius: 6px;
 			display: flex;
 			flex-direction: column;
@@ -233,7 +234,7 @@
 
 			.options {
 				flex: 1 1 auto;
-				overflow: hidden scroll;
+				overflow: hidden auto;
 				border-radius: 4px;
 				border: none;
 				flex-direction: column;
@@ -253,10 +254,10 @@
 					background: transparent;
 					outline: none;
 					border: none;
-					border-bottom: 1px solid var(--md-outline-variant);
+					border-bottom: 1px solid var(--color-border-variant);
 
 					&:hover {
-						background-color: var(--md-surface-container-highest);
+						background-color: var(--color-surface-lower);
 					}
 
 					&:first-child {

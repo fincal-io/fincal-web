@@ -79,8 +79,6 @@ export const initAuth = async () => {
 	try {
 		const valid = await verifyToken();
 
-		console.log({ valid });
-
 		if (!valid) {
 			goto('/sign-in', { replaceState: true });
 		} else {
