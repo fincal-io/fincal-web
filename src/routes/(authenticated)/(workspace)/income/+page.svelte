@@ -1,13 +1,16 @@
 <script lang="ts">
-	import type { BreadcrumbItem } from '../../../../components/breadcrumb.svelte';
+	import { goto } from '$app/navigation';
+	import IconButton from '../../../../components/button/iconButton.svelte';
 	import Header from '../../../../components/header.svelte';
+	import AddIcon from '../../../../icons/addIcon.svelte';
 
-	const breadcrumbs: BreadcrumbItem[] = [
-		{
-			name: 'Home',
-			href: '/home'
-		}
-	];
+	const edit = (id = 'new') => {
+		goto(`/income/${id}`);
+	};
 </script>
 
-<Header {breadcrumbs} />
+<Header title="Income">
+	<IconButton onclick={() => edit()}>
+		<AddIcon />
+	</IconButton>
+</Header>

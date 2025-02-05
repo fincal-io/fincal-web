@@ -1,67 +1,50 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import type { components } from '../../../../api/fincal';
-	import type { BreadcrumbItem } from '../../../../components/breadcrumb.svelte';
 	import Header from '../../../../components/header.svelte';
-	import { api } from '../../../../api/api';
 	import IconButton from '../../../../components/button/iconButton.svelte';
 	import AddIcon from '../../../../icons/addIcon.svelte';
-	import Table from '../../../../components/table/table.svelte';
-	import TableRow from '../../../../components/table/table-row.svelte';
-	import TableCell from '../../../../components/table/table-cell.svelte';
+	import { addNewEntity } from '../../../../components/entity/add-entity.svelte';
+	import { entitiesState$, fetchEntities } from '../../../../states/entities.state.svelte';
+	import type { ListItem } from '../../../../components/simple-list.svelte';
+	import SimpleList from '../../../../components/simple-list.svelte';
 
-	const breadcrumbs: BreadcrumbItem[] = [
-		{
-			name: 'Home',
-			href: '/home'
-		},
-		{
-			name: 'Entity',
-			href: '/entity'
+	const add = async () => {
+		const id = await addNewEntity(null);
+
+		if (id) {
+			await fetchEntities(true);
 		}
-	];
-
-	const add = () => {
-		goto(`/entity/new`);
 	};
 
-	let entities$ = $state([] as components['schemas']['entity_entity'][]);
-
 	onMount(async () => {
-		const { data } = await api.GET('/api/v1/entities/');
+		await fetchEntities(true);
+	});
 
-		entities$ = data || [];
+	const edit = async (item: ListItem) => {
+		const entity = entitiesState$.entities.find((i) => i.id === item.id);
+
+		if (entity) {
+			const id = await addNewEntity(entity);
+
+			if (id) {
+				await fetchEntities(true);
+			}
+		}
+	};
+
+	let options$ = $derived.by(() => {
+		return entitiesState$.entities.map((entity) => ({
+			id: entity.id ?? '',
+			name: entity.name ?? '',
+			icon: entity.icon || ' '
+		}));
 	});
 </script>
 
-<Header {breadcrumbs}>
+<Header title="Entities">
 	<IconButton onclick={() => add()}>
 		<AddIcon />
 	</IconButton>
 </Header>
 
-<div class="content">
-	<Table>
-		{#each entities$ as entity}
-			<TableRow onclick={() => goto(`/entity/${entity.id}`)}>
-				<TableCell>
-					<span class={['icon ti', entity.icon?.replace('icon::', '')]}></span>
-				</TableCell>
-				<TableCell max>{entity.name}</TableCell>
-			</TableRow>
-		{/each}
-	</Table>
-</div>
-
-<style lang="scss">
-	.content {
-		padding: 6px 8px 6px 10px;
-	}
-
-	.icon {
-		font-size: 22px;
-		display: block;
-		background-color: transparent;
-	}
-</style>
+<SimpleList title="All Entities" items={options$} onClick={(e) => edit(e)} />

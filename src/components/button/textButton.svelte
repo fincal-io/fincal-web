@@ -5,6 +5,7 @@
 		faded,
 		disabled = false,
 		onclick,
+		size = 'md',
 		...rest
 	}: {
 		children?: any;
@@ -12,10 +13,11 @@
 		disabled?: boolean;
 		faded?: boolean;
 		onclick?: () => void;
+		size?: 'md' | 'lg';
 	} = $props();
 </script>
 
-<button {...rest} class:block class:faded {onclick} {disabled}>
+<button {...rest} class={size} class:block class:faded {onclick} {disabled}>
 	{@render children?.()}
 </button>
 
@@ -54,6 +56,10 @@
 		&[disabled] {
 			opacity: 0.4;
 			cursor: not-allowed;
+		}
+
+		&.lg {
+			padding: 12px 16px;
 		}
 	}
 </style>

@@ -1,6 +1,9 @@
 import { goto } from '$app/navigation';
 import { api } from '../api/api';
 import type { components } from '../api/fincal';
+import { clearFetchedCategory } from './categories.state.svelte';
+import { clearFetchedEntity } from './entities.state.svelte';
+import { clearFetchedTag } from './tags.state.svelte';
 
 export const workspaceState$ = $state({
 	loaded: false,
@@ -17,6 +20,10 @@ export const switchWorkspace = async (workspaceId: string) => {
 	});
 
 	if (data?.token) {
+		clearFetchedCategory();
+		clearFetchedTag();
+		clearFetchedEntity();
+
 		workspaceState$.workspaceToken = data.token;
 		workspaceState$.workspaceId = workspaceId;
 

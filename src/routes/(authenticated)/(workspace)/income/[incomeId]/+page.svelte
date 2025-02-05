@@ -35,7 +35,7 @@
 					amountField: 'amount',
 					currencyEditable: true,
 					amountEditable: true,
-					title: 'Subscription Amount'
+					title: 'Income'
 				},
 				unmanaged: true
 			},
@@ -54,14 +54,14 @@
 				validators: [Validators.required],
 				attributes: {
 					name: 'Frequency',
-					placeholder: 'When subscription is charged'
+					placeholder: 'When do you get paid'
 				}
 			},
 			entityId: {
 				type: 'multi-select',
 				attributes: {
-					name: 'Business',
-					placeholder: 'Select the business',
+					name: 'Income Source',
+					placeholder: 'Select a income source',
 					multi: false,
 					canAdd: true,
 					options: entitiesState$.options,
@@ -126,9 +126,4 @@
 	};
 </script>
 
-<FormBuilder
-	{form}
-	title="Subscription"
-	close={() => goto('/subscription')}
-	submit={handleSubmit}
-/>
+<FormBuilder {form} title="Income" close={() => goto('/income')} submit={handleSubmit} />

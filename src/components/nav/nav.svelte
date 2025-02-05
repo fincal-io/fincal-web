@@ -81,7 +81,7 @@
 			<BudgetIcon color="var(--md-on-surface-variant)" />
 			<p class="name">Budget</p>
 		</a>
-		<div class="divider"></div>
+		<!-- <div class="divider"></div>
 		<a
 			class="nav-item"
 			class:active={basePath$ === 'chat'}
@@ -90,8 +90,8 @@
 		>
 			<ChatIcon color="var(--md-on-surface-variant)" />
 			<p class="name">Chat</p>
-		</a>
-		<a
+		</a> -->
+		<!-- <a
 			class="nav-item"
 			class:active={basePath$ === 'space'}
 			data-sveltekit-replacestate
@@ -99,7 +99,7 @@
 		>
 			<WhiteboardIcon color="var(--md-on-surface-variant)" />
 			<p class="name">Briefcase</p>
-		</a>
+		</a> -->
 	</div>
 
 	<div class="nav-item-group">

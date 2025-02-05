@@ -13,46 +13,39 @@
 	import { addNewCategory } from '../../../../components/category/add-category.svelte';
 	import type { ListItem } from '../../../../components/simple-list.svelte';
 	import SimpleList from '../../../../components/simple-list.svelte';
-
-	let categories$ = $state([] as components['schemas']['category_entity'][]);
-
-	const fetchCategories = async () => {
-		const { data } = await api.GET('/api/v1/categories/');
-
-		categories$ = data || [];
-	};
-
-	let options$ = $derived.by(() => {
-		return categories$.map((category) => ({
-			id: category.id ?? '',
-			name: category.name ?? '',
-			icon: category.icon || ' '
-		}));
-	});
+	import { categoriesState$, fetchCategories } from '../../../../states/categories.state.svelte';
 
 	const add = async () => {
 		const id = await addNewCategory(null);
 
 		if (id) {
-			await fetchCategories();
+			await fetchCategories(true);
 		}
 	};
 
 	onMount(async () => {
-		fetchCategories();
+		await fetchCategories(true);
 	});
 
 	const edit = async (item: ListItem) => {
-		const category = categories$.find((i) => i.id === item.id);
+		const entity = categoriesState$.categories.find((i) => i.id === item.id);
 
-		if (category) {
-			const id = await addNewCategory(category);
+		if (entity) {
+			const id = await addNewCategory(entity);
 
 			if (id) {
-				await fetchCategories();
+				await fetchCategories(true);
 			}
 		}
 	};
+
+	let options$ = $derived.by(() => {
+		return categoriesState$.categories.map((category) => ({
+			id: category.id ?? '',
+			name: category.name ?? '',
+			icon: category.icon || ' '
+		}));
+	});
 </script>
 
 <Header title="Categories">

@@ -11,18 +11,7 @@
 	import { workspaceState$ } from '../../../../../states/workspace.state.svelte';
 	import { entitiesState$, fetchEntities } from '../../../../../states/entities.state.svelte';
 	import { categoriesState$, fetchCategories } from '../../../../../states/categories.state.svelte';
-	import { fetchTags, tagsState$ } from '../../../../../states/tags.state.svelte';
-	import { addNewTag } from '../../../../../components/tag/add-tag.svelte';
-	import { on } from 'svelte/events';
-	import { addNewCategory } from '../../../../../components/category/add-category.svelte';
-	import { addNewEntity } from '../../../../../components/entity/add-entity.svelte';
-	import FrequencyPicker from '../../../../../components/form/frequency-picker.svelte';
-
-	onMount(async () => {
-		await fetchEntities();
-		await fetchCategories();
-		await fetchTags();
-	});
+	import { fetchTags } from '../../../../../states/tags.state.svelte';
 
 	let form = $derived(
 		createForm({
@@ -35,7 +24,7 @@
 					amountField: 'amount',
 					currencyEditable: true,
 					amountEditable: true,
-					title: 'Subscription Amount'
+					title: 'Income'
 				},
 				unmanaged: true
 			},
@@ -48,24 +37,34 @@
 					placeholder: 'Pick a friendly name'
 				}
 			},
+			canAppreciate: {
+				type: 'select',
+				defaultValue: '',
+				attributes: {
+					name: 'Automated Depreciation',
+					placeholder: 'Can the liability be depreciated?',
+					options: [
+						{ label: 'Yes', value: 'yes' },
+						{ label: 'No', value: 'no' }
+					]
+				}
+			},
 			frequency: {
 				type: 'frequency',
 				defaultValue: '',
 				validators: [Validators.required],
 				attributes: {
 					name: 'Frequency',
-					placeholder: 'When subscription is charged'
+					placeholder: 'When the liability depreciates'
 				}
 			},
-			entityId: {
-				type: 'multi-select',
+			percentage: {
+				type: 'text',
+				defaultValue: '',
+				validators: [Validators.required],
 				attributes: {
-					name: 'Business',
-					placeholder: 'Select the business',
-					multi: false,
-					canAdd: true,
-					options: entitiesState$.options,
-					onAdd: addNewEntity
+					name: 'Rate',
+					placeholder: 'What is the estimated rate of depreciation?'
 				}
 			},
 			userId: {
@@ -74,28 +73,6 @@
 				validators: [Validators.required],
 				attributes: {
 					placeholder: 'Select the account holder'
-				}
-			},
-			categoryId: {
-				type: 'select',
-				defaultValue: '',
-				attributes: {
-					name: 'Category',
-					placeholder: 'Select the category',
-					options: categoriesState$.options,
-					canAdd: true,
-					onAdd: addNewCategory
-				}
-			},
-			tagIds: {
-				type: 'multi-select',
-				attributes: {
-					name: 'Tags',
-					placeholder: 'Select the tags',
-					options: tagsState$.options,
-					multi: true,
-					canAdd: true,
-					onAdd: addNewTag
 				}
 			}
 		})
@@ -126,9 +103,4 @@
 	};
 </script>
 
-<FormBuilder
-	{form}
-	title="Subscription"
-	close={() => goto('/subscription')}
-	submit={handleSubmit}
-/>
+<FormBuilder {form} title="Liability" close={() => goto('/income')} submit={handleSubmit} />

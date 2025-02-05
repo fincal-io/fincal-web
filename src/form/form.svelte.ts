@@ -8,6 +8,7 @@ import IconInput from './element/icon-input.svelte';
 import ColorInput from './element/color-input.svelte';
 import SelectInput from './element/select-input.svelte';
 import MultiSelectInput from './element/multi-select-input.svelte';
+import FrequencyInput from './element/frequency-input.svelte';
 
 export type FormFieldDefinition = {
 	type: string;
@@ -166,3 +167,4 @@ registerFormElement('icon', IconInput);
 registerFormElement('color', ColorInput);
 registerFormElement('select', SelectInput);
 registerFormElement('multi-select', MultiSelectInput);
+registerFormElement('frequency', FrequencyInput);

@@ -37,6 +37,7 @@
 		"@vitejs/plugin-basic-ssl": "^1.2.0",
 		"emittery": "^1.0.3",
 		"openapi-fetch": "^0.13.4",
+		"rrule": "^2.8.1",
 		"uuid": "^11.0.5"
 	}
 }
